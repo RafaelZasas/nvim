@@ -56,4 +56,5 @@ return require('packer').startup(function(use)
 
     use {'github/copilot.vim', branch="release"}
 
+    use 
   end)

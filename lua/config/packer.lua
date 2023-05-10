@@ -68,5 +68,13 @@ return require('packer').startup(function(use)
 
     -- I like to let my co pilot take the wheel
     use {'github/copilot.vim', branch="release"}
- 
+
+    -- I like to see what im doing
+    use({
+        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        config = function()
+            require("lsp_lines").setup()
+        end,
+    })
+
   end)

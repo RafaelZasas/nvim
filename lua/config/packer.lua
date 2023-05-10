@@ -46,6 +46,15 @@ return require('packer').startup(function(use)
         {'hrsh7th/nvim-cmp'},     -- Required
         {'hrsh7th/cmp-nvim-lsp'}, -- Required
         {'L3MON4D3/LuaSnip'},     -- Required
+        {'saadparwaiz1/cmp_luasnip'}, -- Optional
+        {'hrsh7th/cmp-buffer'},   -- Optional
+        {'hrsh7th/cmp-path'},     -- Optional
+        {'hrsh7th/cmp-calc'},     -- Optional
+        {'hrsh7th/cmp-emoji'},    -- Optional
+        {'f3fora/cmp-spell'},     -- Optional
+        {'hrsh7th/cmp-vsnip'},    -- Optional
+        {'hrsh7th/vim-vsnip'},    -- Optional
+        {'rafamadriz/friendly-snippets'}, -- Optional
     }
 }
 
@@ -55,6 +64,5 @@ return require('packer').startup(function(use)
     }
 
     use {'github/copilot.vim', branch="release"}
-
-    use 
+ 
   end)

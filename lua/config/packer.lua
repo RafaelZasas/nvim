@@ -8,26 +8,29 @@ return require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
+    -- Pretty menu to see files
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.1',
         -- or                            , branch = '0.1.x',
         requires = { {'nvim-lua/plenary.nvim'} }
     }
 
-    use({ 'rose-pine/neovim',
-    as = 'rose-pine',
-    config = function()
-        vim.cmd('colorscheme rose-pine')
-    end})
+    -- Color Scheme
+    use('marko-cerovac/material.nvim')
 
+    -- sitting on trees, looking at the vue
     use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
 
+    -- Just swingin around
     use('theprimeagen/harpoon')
 
+    -- everybody makes mistakes, everybody has those days
     use('mbbill/undotree')
 
+    -- running from the git police
     use('tpope/vim-fugitive')
 
+    -- still dont know what lsp stands for but im about it
     use {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v2.x',
@@ -57,12 +60,13 @@ return require('packer').startup(function(use)
         {'rafamadriz/friendly-snippets'}, -- Optional
     }
 }
-
+    -- I dont like closing brackets on my own
     use {
         "windwp/nvim-autopairs",
         config = function() require("nvim-autopairs").setup {} end
     }
 
+    -- I like to let my co pilot take the wheel
     use {'github/copilot.vim', branch="release"}
  
   end)

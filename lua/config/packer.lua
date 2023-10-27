@@ -16,10 +16,13 @@ return require('packer').startup(function(use)
     }
 
     -- Color Scheme
-    use('marko-cerovac/material.nvim')
+    use { "catppuccin/nvim", as = "catppuccin" }
 
     -- sitting on trees, looking at the vue
-    use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate'
+    }
 
     -- Just swingin around
     use('theprimeagen/harpoon')
@@ -33,48 +36,44 @@ return require('packer').startup(function(use)
     -- still dont know what lsp stands for but im about it
     use {
         'VonHeikemen/lsp-zero.nvim',
-        branch = 'v2.x',
+        branch = 'v3.x',
         requires = {
-            -- LSP Support
-            {'neovim/nvim-lspconfig'},             -- Required
-            {                                      -- Optional
-            'williamboman/mason.nvim',
-            run = function()
-                pcall(vim.cmd, 'MasonUpdate')
-            end,
-        },
-        {'williamboman/mason-lspconfig.nvim'}, -- Optional
+            --------- LSP Support ------------------
+            {'williamboman/mason.nvim'},
+            {'williamboman/mason-lspconfig.nvim'},  -- Optional
 
-        -- Autocompletion
-        {'hrsh7th/nvim-cmp'},     -- Required
-        {'hrsh7th/cmp-nvim-lsp'}, -- Required
-        {'L3MON4D3/LuaSnip'},     -- Required
-        {'saadparwaiz1/cmp_luasnip'}, -- Optional
-        {'hrsh7th/cmp-buffer'},   -- Optional
-        {'hrsh7th/cmp-path'},     -- Optional
-        {'hrsh7th/cmp-calc'},     -- Optional
-        {'hrsh7th/cmp-emoji'},    -- Optional
-        {'f3fora/cmp-spell'},     -- Optional
-        {'hrsh7th/cmp-vsnip'},    -- Optional
-        {'hrsh7th/vim-vsnip'},    -- Optional
-        {'rafamadriz/friendly-snippets'}, -- Optional
+            {'neovim/nvim-lspconfig'},              -- Required
+            -------- Autocompletion ----------------
+
+            {'hrsh7th/nvim-cmp'},                   -- Required
+            {'hrsh7th/cmp-nvim-lsp'},               -- Required
+            {'L3MON4D3/LuaSnip'},                   -- Required
+            {'saadparwaiz1/cmp_luasnip'},           -- Optional
+            {'hrsh7th/cmp-buffer'},                 -- Optional
+            {'hrsh7th/cmp-path'},                   -- Optional
+            {'hrsh7th/cmp-calc'},                   -- Optional
+            {'hrsh7th/cmp-emoji'},                  -- Optional
+            {'f3fora/cmp-spell'},                   -- Optional
+            {'hrsh7th/cmp-vsnip'},                  -- Optional
+            {'hrsh7th/vim-vsnip'},                  -- Optional
+            {'rafamadriz/friendly-snippets'},       -- Optional
+        }
     }
-}
     -- I dont like closing brackets on my own
     use {
         "windwp/nvim-autopairs",
         config = function() require("nvim-autopairs").setup {} end
-    }
+    
 
     -- I like to let my co pilot take the wheel
     use {'github/copilot.vim', branch="release"}
 
     -- I like to see what im doing
-    use({
-        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-        config = function()
-            require("lsp_lines").setup()
-        end,
-    })
+  --  use({
+  --      "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  --      config = function()
+  --          require("lsp_lines").setup()
+  --      end,
+  --  })
 
   end)

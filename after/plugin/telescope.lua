@@ -7,11 +7,15 @@ end)
 
 require('telescope').setup({
     defaults = {
-        file_ignore_patterns = { 
-            'package-lock.json',
-            'node_modules', 'dist', 
-            'build', 'out', 
-            'venv', 'emulators-data'
+        file_ignore_patterns = {
+            -- ignore virtual environments and package managers
+            'package-lock.json', 'node_modules/', 'venv/',
+            -- ignore firebase emulator data
+            'emulators-data/', 'firebase-data/',
+            -- ignore build directories
+            'build/', 'out/', 'target/', 'dist/', 'bin/',
+            -- ignore images
+            'png', 'jpg', 'jpeg', 'gif', 'ico', 'webp',
         },
         prompt_prefix = ' 🔍 ',
     },

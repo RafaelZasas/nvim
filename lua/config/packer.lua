@@ -20,15 +20,7 @@ return require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
-    -- Pretty menu to see files
-    use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.1',
-        -- or                            , branch = '0.1.x',
-        requires = { { 'nvim-lua/plenary.nvim' } }
-    }
-
-    -- Color Scheme
-    use { "catppuccin/nvim", as = "catppuccin" }
+    ----------------- LSP Stuff --------------------------------
 
     -- sitting on trees, looking at the vue
     use {
@@ -36,27 +28,18 @@ return require('packer').startup(function(use)
         run = ':TSUpdate'
     }
 
-    -- Just swingin around
-    use('theprimeagen/harpoon')
-
-    -- everybody makes mistakes, everybody has those days
-    use('mbbill/undotree')
-
-    -- running from the git police
-    use('tpope/vim-fugitive')
-
-    -- still dont know what lsp stands for but im about it
+    -- I think this is major overkill but why not
     use {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v3.x',
         requires = {
             --------- LSP Support ------------------
-            { 'williamboman/mason.nvim' },
+            { 'neovim/nvim-lspconfig' },             -- Required
+
+            { 'williamboman/mason.nvim' },           -- Package manager for LSP's
             { 'williamboman/mason-lspconfig.nvim' }, -- Optional
 
-            { 'neovim/nvim-lspconfig' },             -- Required
             -------- Autocompletion ----------------
-
             { 'hrsh7th/nvim-cmp' },             -- Required
             { 'hrsh7th/cmp-nvim-lsp' },         -- Required
             { 'L3MON4D3/LuaSnip' },             -- Required
@@ -72,12 +55,49 @@ return require('packer').startup(function(use)
         }
     }
 
+    use 'nvimtools/none-ls.nvim' -- For formatters and linters
+
+    ------------ Navigation stuff -------------------
+
+    -- Pretty menu to see files
+    use {
+        'nvim-telescope/telescope.nvim', tag = '0.1.5',
+        requires = { { 'nvim-lua/plenary.nvim' } }
+    }
+
+    -- Just swingin around
+    -- Really nifty quick file navigation
+    use('theprimeagen/harpoon')
+
+    -- everybody makes mistakes, everybody has those days
+    use('mbbill/undotree')
+
+    -- running from the git police
+    use('tpope/vim-fugitive')
+
+    use {
+        'folke/trouble.nvim',
+    }
+
+    --------------- UI Stuff -----------------------
+
+    -- Color Scheme
+    use { "catppuccin/nvim", as = "catppuccin" }
+
+    -- Fancy icons
+    use 'nvim-tree/nvim-web-devicons'
+
+    -- Tailwindcss colors
+    use "roobert/tailwindcss-colorizer-cmp.nvim"
+
+
+    --------- Quality of Life stuff ----------------
+
     -- I dont like closing brackets on my own
     use {
         "windwp/nvim-autopairs",
         config = function() require("nvim-autopairs").setup {} end
     }
-
 
     -- I like to let my co pilot take the wheel
     use { 'github/copilot.vim', branch = "release" }

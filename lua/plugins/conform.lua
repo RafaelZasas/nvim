@@ -24,6 +24,7 @@ return { -- Autoformat
       html = { 'prettier' },
       css = { 'prettier' },
       templ = { 'templ' },
+      yaml = { 'yaml' },
     },
   },
 }

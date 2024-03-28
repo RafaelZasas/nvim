@@ -47,7 +47,7 @@ vim.opt.timeoutlen = 300
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
-vim.opt.colorcolumn = '100'
+vim.opt.colorcolumn = '80'
 
 -- Enable break indent
 vim.opt.breakindent = true

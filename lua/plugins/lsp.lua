@@ -216,8 +216,8 @@ return { -- LSP Configuration & Plugins
     vim.list_extend(ensure_installed, {
       'stylua', -- Used to format lua code
     })
-    -- Leaving this out so I can manually install the tools I need
-    --require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+    -- WARNING: Leaving this out so I can manually install the tools I need
+    require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {
       handlers = {

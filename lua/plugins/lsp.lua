@@ -1,130 +1,9 @@
-local lspconfig = require 'lspconfig'
-
 -- LSP servers and clients are able to communicate to each other what features they support.
 --  By default, Neovim doesn't support everything that is in the LSP Specification.
 --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
 --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-
--- Enable the following language servers
---  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
---
---  Add any additional override configuration in the following tables. Available keys are:
---  - cmd (table): Override the default command used to start the server
---  - filetypes (table): Override the default list of associated filetypes for the server
---  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
---  - settings (table): Override the default settings passed when initializing the server.
---        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
-local servers = {
-  gopls = {
-    filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
-    single_file_support = true,
-  },
-
-  tailwindcss = {
-    filetypes = {
-      'html',
-      'css',
-      'scss',
-      'javascript',
-      'javascriptreact',
-      'typescript',
-      'typescriptreact',
-      'svelte',
-      'vue',
-      'templ',
-    },
-    root_dir = lspconfig.util.root_pattern(
-      'tailwind.config.js',
-      'tailwind.config.cjs',
-      'tailwind.config.ts',
-      'tailwind.config.tsx',
-      'tailwind.config.json',
-      '.git'
-    ),
-    settings = {
-      tailwindCSS = {
-        classAttributes = { 'class', 'className', 'class:list', 'classList', 'ngClass' },
-        lint = {
-          cssConflict = 'warning',
-          invalidApply = 'error',
-          invalidConfigPath = 'error',
-          invalidScreen = 'error',
-          invalidTailwindDirective = 'error',
-          invalidVariant = 'error',
-          recommendedVariantOrder = 'warning',
-        },
-        includeLanguages = {
-          css = 'css',
-          javascript = 'javascript',
-          javascriptreact = 'javascript',
-          typescript = 'javascript',
-          typescriptreact = 'javascript',
-          svelte = 'html',
-          vue = 'html',
-          templ = 'html',
-        },
-        validate = true,
-      },
-    },
-  },
-
-  -- Typescript / Javascript
-  tsserver = {},
-  yamlls = {},
-  yamlfmt = {},
-
-  html = {
-    filetypes = { 'html', 'templ' },
-  },
-
-  htmx = {
-    filetypes = { 'html', 'templ' },
-  },
-
-  templ = {
-    filetypes = { 'templ' },
-    cmd = { '/home/rafael/go/bin/templ', 'lsp' },
-  },
-
-  -- svelte / sveltekit
-  svelte = {
-    cmd = { 'svelteserver', '--stdio' },
-    filetypes = { 'svelte' },
-    root_dir = lspconfig.util.root_pattern('svelte.config.js', '.git'),
-  },
-
-  -- Python
-  pylsp = {},
-
-  lua_ls = {
-    -- cmd = {...},
-    -- filetypes { ...},
-    -- capabilities = {},
-    settings = {
-      Lua = {
-        runtime = { version = 'LuaJIT' },
-        workspace = {
-          checkThirdParty = false,
-          -- Tells lua_ls where to find all the Lua files that you have loaded
-          -- for your neovim configuration.
-          library = {
-            '${3rd}/luv/library',
-            unpack(vim.api.nvim_get_runtime_file('', true)),
-          },
-          -- If lua_ls is really slow on your computer, you can try this instead:
-          -- library = { vim.env.VIMRUNTIME },
-        },
-        completion = {
-          callSnippet = 'Replace',
-        },
-        -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-        -- diagnostics = { disable = { 'missing-fields' } },
-      },
-    },
-  },
-}
 
 return { -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
@@ -186,7 +65,7 @@ return { -- LSP Configuration & Plugins
         -- WARN: This is not Goto Definition, this is Goto Declaration.
         --  For example, in C this would take you to the header
         map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-      end,
+      end, -- end create_autoCmd
     })
 
     -- Ensure the servers and tools above are installed
@@ -209,6 +88,128 @@ return { -- LSP Configuration & Plugins
     vim.filetype.add { extension = { templ = 'templ' } }
 
     require('lspconfig.ui.windows').default_options.border = 'rounded'
+
+
+    local lspconfig = require 'lspconfig'
+    -- Enable the following language servers
+    --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
+    --
+    --  Add any additional override configuration in the following tables. Available keys are:
+    --  - cmd (table): Override the default command used to start the server
+    --  - filetypes (table): Override the default list of associated filetypes for the server
+    --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
+    --  - settings (table): Override the default settings passed when initializing the server.
+    --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+    local servers = {
+      gopls = {
+        filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+        single_file_support = true,
+      },
+
+      tailwindcss = {
+        filetypes = {
+          'html',
+          'css',
+          'scss',
+          'javascript',
+          'javascriptreact',
+          'typescript',
+          'typescriptreact',
+          'svelte',
+          'vue',
+          'templ',
+        },
+        root_dir = lspconfig.util.root_pattern(
+          'tailwind.config.js',
+          'tailwind.config.cjs',
+          'tailwind.config.ts',
+          'tailwind.config.tsx',
+          'tailwind.config.json',
+          '.git'
+        ),
+        settings = {
+          tailwindCSS = {
+            classAttributes = { 'class', 'className', 'class:list', 'classList', 'ngClass' },
+            lint = {
+              cssConflict = 'warning',
+              invalidApply = 'error',
+              invalidConfigPath = 'error',
+              invalidScreen = 'error',
+              invalidTailwindDirective = 'error',
+              invalidVariant = 'error',
+              recommendedVariantOrder = 'warning',
+            },
+            includeLanguages = {
+              css = 'css',
+              javascript = 'javascript',
+              javascriptreact = 'javascript',
+              typescript = 'javascript',
+              typescriptreact = 'javascript',
+              svelte = 'html',
+              vue = 'html',
+              templ = 'html',
+            },
+            validate = true,
+          },
+        },
+      },
+
+      -- Typescript / Javascript
+      tsserver = {},
+      yamlls = {},
+      yamlfmt = {},
+
+      html = {
+        filetypes = { 'html', 'templ' },
+      },
+
+      htmx = {
+        filetypes = { 'html', 'templ' },
+      },
+
+      templ = {
+        filetypes = { 'templ' },
+        cmd = { '/home/rafael/go/bin/templ', 'lsp' },
+      },
+
+      -- svelte / sveltekit
+      svelte = {
+        cmd = { 'svelteserver', '--stdio' },
+        filetypes = { 'svelte' },
+        root_dir = lspconfig.util.root_pattern('svelte.config.js', '.git'),
+      },
+
+      -- Python
+      pylsp = {},
+
+      lua_ls = {
+        -- cmd = {...},
+        -- filetypes { ...},
+        -- capabilities = {},
+        settings = {
+          Lua = {
+            runtime = { version = 'LuaJIT' },
+            workspace = {
+              checkThirdParty = false,
+              -- Tells lua_ls where to find all the Lua files that you have loaded
+              -- for your neovim configuration.
+              library = {
+                '${3rd}/luv/library',
+                unpack(vim.api.nvim_get_runtime_file('', true)),
+              },
+              -- If lua_ls is really slow on your computer, you can try this instead:
+              -- library = { vim.env.VIMRUNTIME },
+            },
+            completion = {
+              callSnippet = 'Replace',
+            },
+            -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+            -- diagnostics = { disable = { 'missing-fields' } },
+          },
+        },
+      },
+    }
+    -- END language servers table
 
     -- You can add other tools here that you want Mason to install
     -- for you, so that they are available from within Neovim.
@@ -265,5 +266,5 @@ return { -- LSP Configuration & Plugins
     --     },
     --   },
     -- }
-  end,
+  end, -- end lspconfig config function
 }

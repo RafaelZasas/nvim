@@ -1,5 +1,3 @@
-local lspconfig = require 'lspconfig'
-
 -- LSP servers and clients are able to communicate to each other what features they support.
 --  By default, Neovim doesn't support everything that is in the LSP Specification.
 --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
@@ -35,14 +33,14 @@ local servers = {
       'vue',
       'templ',
     },
-    root_dir = lspconfig.util.root_pattern(
-      'tailwind.config.js',
-      'tailwind.config.cjs',
-      'tailwind.config.ts',
-      'tailwind.config.tsx',
-      'tailwind.config.json',
-      '.git'
-    ),
+    -- root_dir = require('lspconfig').util.root_pattern(
+    --   'tailwind.config.js',
+    --   'tailwind.config.cjs',
+    --   'tailwind.config.ts',
+    --   'tailwind.config.tsx',
+    --   'tailwind.config.json',
+    --   '.git'
+    -- ),
     settings = {
       tailwindCSS = {
         classAttributes = { 'class', 'className', 'class:list', 'classList', 'ngClass' },
@@ -72,6 +70,7 @@ local servers = {
 
   -- Typescript / Javascript
   tsserver = {},
+  eslint = {},
   yamlls = {},
   yamlfmt = {},
 
@@ -92,11 +91,24 @@ local servers = {
   svelte = {
     cmd = { 'svelteserver', '--stdio' },
     filetypes = { 'svelte' },
-    root_dir = lspconfig.util.root_pattern('svelte.config.js', '.git'),
+    -- root_dir = lspconfig.util.root_pattern('svelte.config.js', '.git'),
   },
 
   -- Python
-  pylsp = {},
+  pylsp = {
+    filetypes = { 'python' },
+    capabilities = {
+      completionProvider = {
+        triggerCharacters = { '.', ':' },
+      },
+    },
+  },
+
+  -- json
+  jsonls = {},
+
+  -- Zig
+  zls = {},
 
   lua_ls = {
     -- cmd = {...},
@@ -139,6 +151,8 @@ return { -- LSP Configuration & Plugins
     { 'j-hui/fidget.nvim', opts = {} },
   },
   config = function()
+    local lspconfig = require 'lspconfig'
+
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
       callback = function(event)
@@ -217,7 +231,7 @@ return { -- LSP Configuration & Plugins
       'stylua', -- Used to format lua code
     })
     -- Leaving this out so I can manually install the tools I need
-    --require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+    -- require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {
       handlers = {

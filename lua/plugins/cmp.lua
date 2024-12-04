@@ -127,7 +127,7 @@ return { -- Autocompletion
       formatting = {
         -- changing the order of fields so the icon is the first
         fields = { 'abbr', 'kind', 'menu' },
-        format = Cmp_formatter,
+        format = cmp_formatter,
       },
 
       window = {

@@ -91,7 +91,6 @@ return { -- LSP Configuration & Plugins
 
     require('lspconfig.ui.windows').default_options.border = 'rounded'
 
-
     local lspconfig = require 'lspconfig'
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -157,7 +156,6 @@ return { -- LSP Configuration & Plugins
       },
 
       -- Typescript / Javascript
-      tsserver = {},
       yamlls = {},
       yamlfmt = {},
 

@@ -1,4 +1,7 @@
-local catppuccinConfig = function()
+local catppuccin =  {
+  'catppuccin/nvim',
+  name = 'catppuccin',
+  config =  function()
   require('catppuccin').setup {
     flavour = 'mocha', -- latte, frappe, macchiato, mocha
     background = {
@@ -82,13 +85,9 @@ local catppuccinConfig = function()
     },
   }
 end
-
-return {
-  'catppuccin/nvim',
-  name = 'catppuccin',
-  priority = 1000,
-  config = catppuccinConfig(),
 }
+
+return catppuccin
 
 -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })

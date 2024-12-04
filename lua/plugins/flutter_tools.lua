@@ -1,8 +1,12 @@
 local addFlutterCommands = function()
   local commands = require 'flutter-tools.commands' --@module "flutter-tools.commands"
+  local outline = require 'flutter-tools.outline' ---@module "flutter-tools.outline"
+
   vim.keymap.set('n', '<leader>fr', commands.run, { desc = '[F]lutter [r]un' })
   vim.keymap.set('n', '<leader>fR', commands.restart, { desc = '[F]lutter [R]estart' })
   vim.keymap.set('n', '<leader>fq', commands.quit, { desc = '[F]lutter [Q]uit' })
+  vim.keymap.set('n', '<leader>fv', commands.visual_debug, { desc = '[F]lutter [V]isual Debug' })
+  vim.keymap.set('n', '<leader>fo', outline.toggle, { desc = '[F]lutter [O]utline Toggle' })
 end
 
 return {
@@ -11,6 +15,7 @@ return {
   dependencies = {
     'nvim-lua/plenary.nvim',
     'stevearc/dressing.nvim', -- optional for vim.ui.select
+    'mfussenegger/nvim-dap', -- optional for debugger
   },
   config = function()
     require('flutter-tools').setup {
@@ -27,14 +32,14 @@ return {
         statusline = {
           -- set to true to be able use the 'flutter_tools_decorations.app_version' in your statusline
           -- this will show the current version of the flutter app from the pubspec.yaml file
-          app_version = false,
+          app_version = true,
           -- set to true to be able use the 'flutter_tools_decorations.device' in your statusline
           -- this will show the currently running device if an application was started with a specific
           -- device
-          device = false,
+          device = true,
           -- set to true to be able use the 'flutter_tools_decorations.project_config' in your statusline
           -- this will show the currently selected project configuration
-          project_config = false,
+          project_config = true,
         },
       },
       debugger = { -- integrate with nvim dap + install dart code debugger
@@ -61,19 +66,19 @@ return {
         open_cmd = 'tabedit', -- command to use to open the log buffer
       },
       dev_tools = {
-        autostart = false, -- autostart devtools server if not detected
+        autostart = true, -- autostart devtools server if not detected
         auto_open_browser = false, -- Automatically opens devtools in the browser
       },
       outline = {
-        open_cmd = '30vnew', -- command to use to open the outline buffer
+        open_cmd = '50vnew', -- command to use to open the outline buffer
         auto_open = false, -- if true this will open the outline automatically when it is first populated
       },
       lsp = {
         color = { -- show the derived colours for dart variables
-          enabled = false, -- whether or not to highlight color variables at all, only supported on flutter >= 2.10
-          background = false, -- highlight the background
+          enabled = true, -- whether or not to highlight color variables at all, only supported on flutter >= 2.10
+          background = true, -- highlight the background
           background_color = nil, -- required, when background is transparent (i.e. background_color = { r = 19, g = 17, b = 24},)
-          foreground = false, -- highlight the foreground
+          foreground = true, -- highlight the foreground
           virtual_text = true, -- show the highlight using virtual text
           virtual_text_str = '■', -- the virtual text character to highlight
         },

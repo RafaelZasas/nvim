@@ -53,12 +53,19 @@ require('lazy').setup({
       require('which-key').setup()
 
       -- Document existing key chains
-      require('which-key').register {
-        ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+      require('which-key').add {
+        { '<leader>c', group = '[C]ode', desc = 'Code related keybinds', mode = 'n' },
+        { '<leader>c_', hidden = true },
+        { '<leader>d', group = '[D]ocument', mode = 'n' },
+        { '<leader>d_', hidden = true },
+        { '<leader>r', group = '[R]ename', mode = 'n' },
+        { '<leader>r_', hidden = true },
+        { '<leader>s', group = '[S]earch', mode = 'n' },
+        { '<leader>s_', hidden = true },
+        { '<leader>w', group = '[W]orkspace', mode = 'n' },
+        { '<leader>w_', hidden = true },
+        { '<leader>f', group = '[F]lutter', mode = 'n' },
+        { '<leader>f_', hidden = true },
       }
     end,
   },

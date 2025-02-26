@@ -91,7 +91,6 @@ return { -- LSP Configuration & Plugins
 
     require('lspconfig.ui.windows').default_options.border = 'rounded'
 
-    local lspconfig = require 'lspconfig'
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
     --
@@ -156,16 +155,14 @@ return { -- LSP Configuration & Plugins
       },
 
       -- Typescript / Javascript
-      yamlls = {},
-      yamlfmt = {},
 
       html = {
         filetypes = { 'html', 'templ' },
       },
 
-      htmx = {
-        filetypes = { 'html', 'templ' },
-      },
+      -- htmx = {
+      --   filetypes = { 'html', 'templ' },
+      -- },
 
       templ = {
         filetypes = { 'templ' },
@@ -215,12 +212,14 @@ return { -- LSP Configuration & Plugins
     -- for you, so that they are available from within Neovim.
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
-      'stylua', -- Used to format lua code
+      -- 'stylua', -- Used to format lua code
     })
     -- WARNING: Leaving this out so I can manually install the tools I need
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {
+      automatic_installation = true,
+      ensure_installed = ensure_installed,
       handlers = {
         function(server_name)
           local server = servers[server_name] or {}

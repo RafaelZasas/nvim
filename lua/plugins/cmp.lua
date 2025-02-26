@@ -1,6 +1,6 @@
 local tailwindcss_colors = require 'tailwindcss-colorizer-cmp'
 
-Cmp_formatter = function(entry, vim_item)
+local cmp_formatter = function(entry, vim_item)
   -- vim_item as processed by tailwindcss-colorizer-cmp
   vim_item = tailwindcss_colors.formatter(entry, vim_item)
   vim_item.menu = ({

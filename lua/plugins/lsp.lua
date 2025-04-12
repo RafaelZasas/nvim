@@ -238,32 +238,5 @@ return { -- LSP Configuration & Plugins
       filetypes = { 'templ' },
       capabilities = capabilities,
     }
-
-    -- -- custom setup for flutter/dart
-    -- lspconfig.dartls.setup {
-    --   capabilities = capabilities,
-    --   cmd = { 'dart', 'language-server', '--protocol=lsp' },
-    --   filetypes = { 'dart' },
-    --   root_dir = lspconfig.util.root_pattern 'pubspec.yaml',
-    --   init_options = {
-    --     onlyAnalyzeProjectsWithOpenFiles = true,
-    --     suggestFromUnimportedLibraries = true,
-    --     closingLabels = true,
-    --     outline = true,
-    --     flutterOutline = true,
-    --   },
-    --   settings = {
-    --     dart = {
-    --       completeFunctionCalls = true,
-    --       updateImportsOnRename = true,
-    --       showTodos = true,
-    --       analysisExcludeFolders = {
-    --         vim.fn.expand '$HOME/.pub-cache',
-    --         vim.fn.expand '$HOME/.dart-sdk',
-    --         vim.fn.expand 'snap/bin/flutter',
-    --       },
-    --     },
-    --   },
-    -- }
   end, -- end lspconfig config function
 }

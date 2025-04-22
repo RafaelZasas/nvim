@@ -36,7 +36,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Keymap for Vim fugitive (git stuff)
-vim.keymap.set('n', '<leader>gs', vim.cmd.Git)
+vim.keymap.set('n', '<leader>gs', vim.cmd.Git, { desc = 'Open [G]it status' })
 
 -- Keymap for TodoComments
-vim.keymap.set('n', '<leader>td', vim.cmd.TodoTelescope)
+vim.keymap.set('n', '<leader>t', vim.cmd.TodoTelescope, { desc = 'Show [T]odo comments' })

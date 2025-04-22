@@ -66,6 +66,8 @@ require('lazy').setup({
         { '<leader>w_', hidden = true },
         { '<leader>f', group = '[F]lutter', mode = 'n' },
         { '<leader>f_', hidden = true },
+        { '<leader>g', group = '[G]it', mode = 'n' },
+        { '<leader>g_', hidden = true },
       }
     end,
   },

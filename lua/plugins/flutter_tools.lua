@@ -93,6 +93,7 @@ return {
             vim.fn.expand '$HOME/.pub-cache',
             vim.fn.expand '$HOME/.dart-sdk',
             vim.fn.expand '/snap/bin/flutter',
+            vim.fn.expand '$HOME/dev/flutter',
           },
           renameFilesWithClasses = 'prompt', -- "always"
           enableSnippets = true,

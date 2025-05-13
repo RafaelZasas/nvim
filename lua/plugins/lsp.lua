@@ -9,8 +9,8 @@ return { -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
   dependencies = {
     -- Automatically install LSPs and related tools to stdpath for neovim
-    'williamboman/mason.nvim',
-    'williamboman/mason-lspconfig.nvim',
+    'mason-org/mason.nvim',
+    'mason-org/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
 
     -- Useful status updates for LSP.
@@ -160,6 +160,8 @@ return { -- LSP Configuration & Plugins
         filetypes = { 'html', 'templ' },
       },
 
+      biome = {},
+
       -- htmx = {
       --   filetypes = { 'html', 'templ' },
       -- },
@@ -214,12 +216,14 @@ return { -- LSP Configuration & Plugins
     vim.list_extend(ensure_installed, {
       -- 'stylua', -- Used to format lua code
     })
-    -- WARNING: Leaving this out so I can manually install the tools I need
+
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {
-      automatic_installation = true,
-      ensure_installed = ensure_installed,
+      --@type boolean | string[] | { exclude: string[] }
+      automatic_enable = true,
+      after = { 'mason.nvim', 'nvim-lspconfig', 'mason-tool-installer' },
+      ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
       handlers = {
         function(server_name)
           local server = servers[server_name] or {}

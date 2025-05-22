@@ -1,10 +1,13 @@
 local addFlutterCommands = function()
   local commands = require 'flutter-tools.commands' --@module "flutter-tools.commands"
   local outline = require 'flutter-tools.outline' ---@module "flutter-tools.outline"
+  local log = require 'flutter-tools.log' ---@module "flutter-tools.log"
 
   vim.keymap.set('n', '<leader>fr', commands.run, { desc = '[F]lutter [r]un' })
   vim.keymap.set('n', '<leader>fR', commands.restart, { desc = '[F]lutter [R]estart' })
   vim.keymap.set('n', '<leader>fq', commands.quit, { desc = '[F]lutter [Q]uit' })
+  vim.keymap.set('n', '<leader>fl', log.toggle, { desc = '[F]lutter [L]ogs Toggle' })
+  vim.keymap.set('n', '<leader>fcl', log.clear, { desc = '[F]lutter [C]lear [L]ogs' })
   vim.keymap.set('n', '<leader>fv', commands.visual_debug, { desc = '[F]lutter [V]isual Debug' })
   vim.keymap.set('n', '<leader>fo', outline.toggle, { desc = '[F]lutter [O]utline Toggle' })
 end
@@ -64,6 +67,7 @@ return {
         enabled = true,
         notify_errors = false, -- if there is an error whilst running then notify the user
         open_cmd = 'tabedit', -- command to use to open the log buffer
+        focus_on_open = false, -- focus the newly opened log window
       },
       dev_tools = {
         autostart = true, -- autostart devtools server if not detected
@@ -94,6 +98,7 @@ return {
             vim.fn.expand '$HOME/.dart-sdk',
             vim.fn.expand '/snap/bin/flutter',
             vim.fn.expand '$HOME/dev/flutter',
+            vim.fn.expand '$HOME/snap/',
           },
           renameFilesWithClasses = 'prompt', -- "always"
           enableSnippets = true,

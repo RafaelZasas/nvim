@@ -36,7 +36,6 @@ number *100* and the block looks a bit like this:
           'typescriptreact',
           'svelte',
           'vue',
-          'templ',
         },
         root_dir = lspconfig.util.root_pattern(
           'tailwind.config.js',
@@ -66,7 +65,6 @@ number *100* and the block looks a bit like this:
               typescriptreact = 'javascript',
               svelte = 'html',
               vue = 'html',
-              templ = 'html',
             },
             validate = true,
           },
@@ -79,11 +77,11 @@ number *100* and the block looks a bit like this:
       yamlfmt = {},
 
       html = {
-        filetypes = { 'html', 'templ' },
+        filetypes = { 'html'},
       },
 
       htmx = {
-        filetypes = { 'html', 'templ' },
+        filetypes = { 'html'},
       },
     -- more language servers ...
     }

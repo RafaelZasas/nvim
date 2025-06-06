@@ -87,8 +87,6 @@ return { -- LSP Configuration & Plugins
       },
     }
 
-    vim.filetype.add { extension = { templ = 'templ' } }
-
     require('lspconfig.ui.windows').default_options.border = 'rounded'
 
     -- Enable the following language servers
@@ -117,7 +115,6 @@ return { -- LSP Configuration & Plugins
           'typescriptreact',
           'svelte',
           'vue',
-          'templ',
         },
         root_dir = lspconfig.util.root_pattern(
           'tailwind.config.js',
@@ -147,7 +144,6 @@ return { -- LSP Configuration & Plugins
               typescriptreact = 'javascript',
               svelte = 'html',
               vue = 'html',
-              templ = 'html',
             },
             validate = true,
           },
@@ -157,19 +153,10 @@ return { -- LSP Configuration & Plugins
       -- Typescript / Javascript
 
       html = {
-        filetypes = { 'html', 'templ' },
+        filetypes = { 'html', 'htmldjango', 'django-html' },
       },
 
       biome = {},
-
-      -- htmx = {
-      --   filetypes = { 'html', 'templ' },
-      -- },
-
-      templ = {
-        filetypes = { 'templ' },
-        cmd = { '/home/rafael/go/bin/templ', 'lsp' },
-      },
 
       -- svelte / sveltekit
       svelte = {
@@ -234,13 +221,6 @@ return { -- LSP Configuration & Plugins
           lspconfig[server_name].setup(server)
         end,
       },
-    }
-
-    -- custom setup for templ
-    lspconfig.templ.setup {
-      cmd = { '/home/rafael/go/bin/templ', 'lsp' },
-      filetypes = { 'templ' },
-      capabilities = capabilities,
     }
   end, -- end lspconfig config function
 }

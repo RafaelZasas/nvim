@@ -17,7 +17,6 @@ M.config = function()
       html = { 'prettier' },
       python = { 'ruff', 'flake8', 'black', stop_after_first = true },
       go = { 'goimports', 'gofmt', stop_after_first = true },
-      templ = { 'templ' },
       yaml = { 'yaml' },
     },
 

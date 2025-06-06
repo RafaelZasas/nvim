@@ -11,16 +11,13 @@ return { -- Highlight, edit, and navigate code
       'markdown',
       'vim',
       'vimdoc',
-      'templ',
     },
     -- Autoinstall languages that are not installed
     auto_install = true,
     highlight = { enable = true },
     indent = { enable = true },
   },
-  dependencies = {
-    'vrischmann/tree-sitter-templ',
-  },
+  dependencies = {},
   config = function(_, opts)
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 

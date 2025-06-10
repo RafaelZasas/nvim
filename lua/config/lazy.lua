@@ -13,7 +13,7 @@ require('lazy').setup({
 
   { 'tpope/vim-fugitive' }, -- Manage git within neovim
 
-  'folke/trouble.nvim', -- view errors in window
+  'folke/trouble.nvim',     -- view errors in window
 
   {
     'roobert/tailwindcss-colorizer-cmp.nvim',
@@ -39,14 +39,20 @@ require('lazy').setup({
     event = 'VimEnter',
     config = function()
       vim.g.copilot_no_tab_map = true
-      vim.api.nvim_set_keymap('i', '<C-j>', 'copilot#Accept("<CR>")', { silent = true, expr = true })
+      -- disable copilot by default
+      vim.g.copilot_enabled = false
+      vim.api.nvim_set_keymap('i', '<C-j>', 'copilot#Accept("<CR>")',
+        { silent = true, expr = true, replace_keycodes = false }
+      )
+      vim.keymap.set('i', '<C-s>', '<Plug>(copilot-suggest)', { desc = '[C]ode Suggest' })
     end,
+
   },
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
 
-  { -- Useful plugin to show you pending keybinds.
+  {                     -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     config = function() -- This is the function that runs, AFTER loading
@@ -54,19 +60,19 @@ require('lazy').setup({
 
       -- Document existing key chains
       require('which-key').add {
-        { '<leader>c', group = '[C]ode', desc = 'Code related keybinds', mode = 'n' },
+        { '<leader>c',  group = '[C]ode',      desc = 'Code related keybinds', mode = 'n' },
         { '<leader>c_', hidden = true },
-        { '<leader>d', group = '[D]ocument', mode = 'n' },
+        { '<leader>d',  group = '[D]ocument',  mode = 'n' },
         { '<leader>d_', hidden = true },
-        { '<leader>r', group = '[R]ename', mode = 'n' },
+        { '<leader>r',  group = '[R]ename',    mode = 'n' },
         { '<leader>r_', hidden = true },
-        { '<leader>s', group = '[S]earch', mode = 'n' },
+        { '<leader>s',  group = '[S]earch',    mode = 'n' },
         { '<leader>s_', hidden = true },
-        { '<leader>w', group = '[W]orkspace', mode = 'n' },
+        { '<leader>w',  group = '[W]orkspace', mode = 'n' },
         { '<leader>w_', hidden = true },
-        { '<leader>f', group = '[F]lutter', mode = 'n' },
+        { '<leader>f',  group = '[F]lutter',   mode = 'n' },
         { '<leader>f_', hidden = true },
-        { '<leader>g', group = '[G]it', mode = 'n' },
+        { '<leader>g',  group = '[G]it',       mode = 'n' },
         { '<leader>g_', hidden = true },
       }
     end,

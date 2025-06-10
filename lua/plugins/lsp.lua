@@ -174,6 +174,9 @@ return { -- LSP Configuration & Plugins
         -- capabilities = {},
         settings = {
           Lua = {
+            diagnostics = {
+              globals = { 'vim' },
+            },
             runtime = { version = 'LuaJIT' },
             workspace = {
               checkThirdParty = false,

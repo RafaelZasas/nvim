@@ -1,28 +1,31 @@
-local tailwindcss_colors = require 'tailwindcss-colorizer-cmp'
+-- local tailwindcss_colors = require 'tailwindcss-colorizer-cmp'
 
-local cmp_formatter = function(entry, vim_item)
-  -- vim_item as processed by tailwindcss-colorizer-cmp
-  vim_item = tailwindcss_colors.formatter(entry, vim_item)
-  vim_item.menu = ({
-    nvim_lsp = 'λ',
-    buffer = '[Buffer]',
-    path = '🖫',
-    emoji = '[Emoji]',
-    luasnip = '[LuaSnip]',
-    vsnip = '[VSCode Snippet]',
-    calc = '[Calc]',
-    spell = '[Spell]',
-  })[entry.source.name]
-  return vim_item
-end
+-- local cmp_formatter = function(entry, vim_item)
+--   -- vim_item as processed by tailwindcss-colorizer-cmp
+--   vim_item = tailwindcss_colors.formatter(entry, vim_item)
+--   vim_item.menu = ({
+--     nvim_lsp = 'λ',
+--     buffer = '[Buffer]',
+--     path = '🖫',
+--     emoji = '[Emoji]',
+--     luasnip = '[LuaSnip]',
+--     vsnip = '[VSCode Snippet]',
+--     calc = '[Calc]',
+--     spell = '[Spell]',
+--   })[entry.source.name]
+--   return vim_item
+-- end
 
-return { -- Autocompletion
-  'hrsh7th/nvim-cmp',
-  event = 'InsertEnter',
+-- Autocompletion with blink.cmp
+return {
+  'saghen/blink.cmp',
+  event = 'VimEnter',
+  version = '1.7.0',
   dependencies = {
     -- Snippet Engine & its associated nvim-cmp source
     {
       'L3MON4D3/LuaSnip',
+      version = '2.*',
       build = (function()
         -- Build Step is needed for regex support in snippets
         -- This step is not supported in many windows environments
@@ -33,107 +36,129 @@ return { -- Autocompletion
         return 'make install_jsregexp'
       end)(),
     },
-    'saadparwaiz1/cmp_luasnip',
+    -- 'saadparwaiz1/cmp_luasnip',
 
-    -- Adds other completion capabilities.
-    --  nvim-cmp does not ship with all sources by default. They are split
-    --  into multiple repos for maintenance purposes.
-    'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-path',
-    'f3fora/cmp-spell', -- SpellChecker
+    -- 'f3fora/cmp-spell', -- SpellChecker
 
-    -- If you want to add a bunch of pre-configured snippets,
-    --    you can use this plugin to help you. It even has snippets
-    --    for various frameworks/libraries/etc. but you will have to
-    --    set up the ones that are useful for you.
-    -- 'rafamadriz/friendly-snippets',
+    'rafamadriz/friendly-snippets',
+    'folke/lazydev.nvim',
+    'onsails/lspkind.nvim',
   },
-  config = function()
-    -- See `:help cmp`
-    local cmp = require 'cmp'
-    local luasnip = require 'luasnip'
-    luasnip.config.setup {}
+  --- @module 'blink.cmp'
+  --- @type blink.cmp.Config
+  opts = {
+    keymap = {
+      preset = 'enter',
 
-    cmp.setup {
-      snippet = {
-        expand = function(args)
-          luasnip.lsp_expand(args.body)
-        end,
+      ['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
+      ['<C-d>'] = { 'scroll_documentation_down', 'fallback' },
+      --       -- Think of <c-l> as moving to the right of your snippet expansion.
+      --       --  So if you have a snippet that's like:
+      --       --  function $name($args)
+      --       --    $body
+      --       --  end
+      --       --
+      --       -- <c-l> will move you to the right of each of the expansion locations.
+      --       -- <c-h> is similar, except moving you backwards.
+      --       ['<C-l>'] = cmp.mapping(function()
+      --         if luasnip.expand_or_locally_jumpable() then
+      --           luasnip.expand_or_jump()
+      --         end
+      --       end, { 'i', 's' }),
+      --       ['<C-h>'] = cmp.mapping(function()
+      --         if luasnip.locally_jumpable(-1) then
+      --           luasnip.jump(-1)
+      --         end
+      --       end, { 'i', 's' }),
+      --     },
+    },
+    appearance = {
+      nerd_font_variant = 'mono',
+      kind_icons = {
+        nvim_lsp = 'λ',
+        path = '🖫',
       },
-      completion = { completeopt = 'menu,menuone,noinsert' },
+    },
 
-      -- For an understanding of why these mappings were
-      -- chosen, you will need to read `:help ins-completion`
-      --
-      -- No, but seriously. Please read `:help ins-completion`, it is really good!
-      mapping = cmp.mapping.preset.insert {
-
-        -- `Enter` key to confirm completion
-        ['<CR>'] = cmp.mapping.confirm { select = false },
-
-        -- Select the [n]ext item
-        ['<C-n>'] = cmp.mapping.select_next_item(),
-        -- Select the [p]revious item
-        ['<C-p>'] = cmp.mapping.select_prev_item(),
-
-        -- Accept ([y]es) the completion.
-        --  This will auto-import if your LSP supports it.
-        --  This will expand snippets if the LSP sent a snippet.
-        ['<C-y>'] = cmp.mapping.confirm { select = true },
-
-        -- Manually trigger a completion from nvim-cmp.
-        --  Generally you don't need this, because nvim-cmp will display
-        --  completions whenever it has completion options available.
-        ['<C-Space>'] = cmp.mapping.complete {},
-
-        -- scroll up and down the documentation window
-        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-d>'] = cmp.mapping.scroll_docs(4),
-
-        -- Think of <c-l> as moving to the right of your snippet expansion.
-        --  So if you have a snippet that's like:
-        --  function $name($args)
-        --    $body
-        --  end
-        --
-        -- <c-l> will move you to the right of each of the expansion locations.
-        -- <c-h> is similar, except moving you backwards.
-        ['<C-l>'] = cmp.mapping(function()
-          if luasnip.expand_or_locally_jumpable() then
-            luasnip.expand_or_jump()
-          end
-        end, { 'i', 's' }),
-        ['<C-h>'] = cmp.mapping(function()
-          if luasnip.locally_jumpable(-1) then
-            luasnip.jump(-1)
-          end
-        end, { 'i', 's' }),
+    -- (Default) Only show the documentation popup when manually triggered
+    completion = {
+      documentation = {
+        auto_show = true,
+        auto_show_delay_ms = 200,
+        treesitter_highlighting = true,
+        window = {
+          border = 'rounded',
+          winhighlight = 'Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None',
+        },
       },
-      sources = {
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-        { name = 'path' },
-        {
-          name = 'spell',
-          option = {
-            keep_all_entries = false,
-            enable_in_context = function()
-              return true
-            end,
+      menu = {
+        winhighlight = 'Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
+        winblend = 0,
+        draw = {
+          treesitter = { 'lsp' },
+          gap = 2,
+          columns = {
+            { 'kind_icon', 'label', 'label_description', gap = 1 },
+            { 'kind', 'source_name', gap = 1 },
+          },
+          components = {
+            kind_icon = {
+              text = function(ctx)
+                local icon = ctx.kind_icon
+                if vim.tbl_contains({ 'Path' }, ctx.source_name) then
+                  local dev_icon, _ = require('nvim-web-devicons').get_icon(ctx.label)
+                  if dev_icon then
+                    icon = dev_icon
+                  end
+                else
+                  icon = require('lspkind').symbolic(ctx.kind, {
+                    mode = 'symbol',
+                  })
+                end
+
+                return icon .. ctx.icon_gap
+              end,
+
+              -- Optionally, use the highlight groups from nvim-web-devicons
+              -- You can also add the same function for `kind.highlight` if you want to
+              -- keep the highlight groups in sync with the icons.
+              highlight = function(ctx)
+                local hl = ctx.kind_hl
+                if vim.tbl_contains({ 'Path' }, ctx.source_name) then
+                  local dev_icon, dev_hl = require('nvim-web-devicons').get_icon(ctx.label)
+                  if dev_icon then
+                    hl = dev_hl
+                  end
+                end
+                return hl
+              end,
+            },
           },
         },
       },
+    },
 
-      formatting = {
-        -- changing the order of fields so the icon is the first
-        fields = { 'abbr', 'kind', 'menu' },
-        format = cmp_formatter,
+    sources = {
+      default = { 'lsp', 'path', 'snippets', 'lazydev' },
+      providers = {
+        lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
       },
+    },
 
+    fuzzy = {
+      implementation = 'prefer_rust_with_warning',
+      prebuilt_binaries = {
+        download = true,
+      },
+    },
+
+    signature = {
+      enabled = true,
       window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
+        border = 'rounded',
+        winhighlight = 'Normal:BlinkCmpSignature,FloatBorder:BlinkCmpSignatureBorder,CursorLine:BlinkCmpSignatureCursorLine,Search:None',
+        winblend = 0,
       },
-    }
-  end,
+    },
+  },
 }

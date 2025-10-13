@@ -51,3 +51,6 @@ vim.opt.colorcolumn = '80'
 
 -- Enable break indent
 vim.opt.breakindent = true
+
+-- Borders
+vim.o.winborder = 'rounded'

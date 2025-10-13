@@ -21,7 +21,6 @@ vim.keymap.set('v', '<leader>y', '"+y')
 vim.keymap.set('n', '<leader>Y', '"+y')
 
 -- Allows you to view diagnostics in a floating window
-vim.keymap.set('n', '<leader>dn', ':lua vim.diagnostic.open_float(0, {focus=false})<CR>')
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 
 -- Highlight when yanking (copying) text
@@ -40,3 +39,5 @@ vim.keymap.set('n', '<leader>gs', vim.cmd.Git, { desc = 'Open [G]it status' })
 
 -- Keymap for TodoComments
 vim.keymap.set('n', '<leader>t', vim.cmd.TodoTelescope, { desc = 'Show [T]odo comments' })
+
+vim.keymap.set('n', '<C-c>', '<Esc>', { noremap = true, silent = true })

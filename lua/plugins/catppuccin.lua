@@ -3,6 +3,12 @@ local catppuccin = {
   name = 'catppuccin',
   config = function()
     require('catppuccin').setup {
+      kitty = true,
+      auto_integrations = true,
+      float = {
+        solid = false,
+        transparent = false,
+      },
       flavour = 'mocha', -- latte, frappe, macchiato, mocha
       background = {
         -- :h background
@@ -38,17 +44,25 @@ local catppuccin = {
       color_overrides = {},
       custom_highlights = function(colors)
         return {
-          --         Comment = { fg = colors.flamingo },
-          TabLineSel = { bg = colors.pink },
-          CmpBorder = { fg = colors.sky },
-          Pmenu = { bg = colors.overlay },
-          PmenuSbar = { bg = colors.overlay2 },
-          PmenuSel = { bg = colors.overlays },
+          LineNr = { fg = colors.rosewater },
+          LineNrAbove = { fg = colors.subtext0 },
+          LineNrBelow = { fg = colors.subtext0 },
+          -- Comment = { fg = colors.flamingo },
+          -- TabLineSel = { bg = colors.pink },
+          -- CmpBorder = { fg = colors.sky },
+          -- PmenuSbar = { bg = colors.overlay2 },
+          -- BlinkCmpScrollBarThumb = { bg = colors.sky },
+          -- BlinkCmpMenuBorder = { fg = colors.sky },
+          -- BlinkCmpMenu = { bg = colors.base, blend = 0 },
+          -- PmenuThumb = { bg = colors.rosewater },
+          -- BlinkCmpMenuSelection = { bg = colors.overlay2, fg = colors.text },
+          -- PmenuSel = { bg = colors.overlay2, fg = colors.text },
         }
       end,
       integrations = {
-        cmp = true,
         gitsigns = true,
+        noice = true,
+        notify = true,
         nvimtree = true,
         treesitter = true,
         coc_nvim = true,
@@ -57,15 +71,15 @@ local catppuccin = {
         lsp_trouble = true,
         mini = {
           enabled = true,
-          indentscope_color = '', -- catppuccin color (eg. `lavender`) Default: text
+          indentscope_color = 'lavender', -- catppuccin color (eg. `lavender`) Default: text
         },
+        blink_cmp = true,
         -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
       },
     }
   end,
 }
 
+vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
+vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
 return catppuccin
-
--- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
--- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })

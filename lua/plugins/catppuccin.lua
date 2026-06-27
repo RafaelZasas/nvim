@@ -3,12 +3,6 @@ local catppuccin = {
   name = 'catppuccin',
   config = function()
     require('catppuccin').setup {
-      kitty = true,
-      auto_integrations = true,
-      float = {
-        solid = false,
-        transparent = false,
-      },
       flavour = 'mocha', -- latte, frappe, macchiato, mocha
       background = {
         -- :h background
@@ -16,7 +10,10 @@ local catppuccin = {
         dark = 'mocha',
       },
       transparent_background = true, -- disables setting the background color.
-      show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
+      float = {
+        solid = false,
+        transparent = false,
+      },
       term_colors = true, -- sets terminal colors (e.g. `g:terminal_color_0`)
       dim_inactive = {
         enabled = true, -- dims the background color of inactive window
@@ -26,6 +23,9 @@ local catppuccin = {
       no_italic = false, -- Force no italic
       no_bold = false, -- Force no bold
       no_underline = false, -- Force no underline
+      kitty = true,
+      auto_integrations = true,
+      show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
       styles = {
         -- Handles the styles of general hi groups (see `:h highlight-args`):
         comments = { 'italic', 'bold' }, -- Change the style of comments
@@ -40,6 +40,25 @@ local catppuccin = {
         properties = {},
         types = {},
         operators = {},
+      },
+      lsp_styles = { -- Handles the style of specific lsp hl groups (see `:h lsp-highlight`).
+        virtual_text = {
+          errors = { 'italic' },
+          hints = { 'italic' },
+          warnings = { 'italic' },
+          information = { 'italic' },
+          ok = { 'italic' },
+        },
+        underlines = {
+          errors = { 'underline' },
+          hints = { 'underline' },
+          warnings = { 'underline' },
+          information = { 'underline' },
+          ok = { 'underline' },
+        },
+        inlay_hints = {
+          background = true,
+        },
       },
       color_overrides = {},
       custom_highlights = function(colors)

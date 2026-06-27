@@ -49,6 +49,10 @@ vim.opt.splitbelow = true
 
 vim.opt.colorcolumn = '80'
 
+-- Folds: start with all folds open; use za/zc/zo/zM/zR to toggle
+-- vim.opt.foldlevel = 99
+-- vim.opt.foldlevelstart = 99
+
 -- Enable break indent
 vim.opt.breakindent = true
 

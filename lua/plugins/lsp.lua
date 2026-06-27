@@ -1,4 +1,4 @@
-return { -- LSP Configuration & Plugins
+return { -- LSP Configuration & Pluginslsp
   'neovim/nvim-lspconfig',
   dependencies = {
     -- Automatically install LSPs and related tools to stdpath for neovim
@@ -196,6 +196,21 @@ return { -- LSP Configuration & Plugins
           functionTypeParameters = true,
         },
       },
+      jsonls = {
+        -- lazy-load schemastore when needed
+        before_init = function(_, new_config)
+          new_config.settings.json.schemas = new_config.settings.json.schemas or {}
+          vim.list_extend(new_config.settings.json.schemas, require('schemastore').json.schemas())
+        end,
+        settings = {
+          json = {
+            format = {
+              enable = true,
+            },
+            validate = { enable = true },
+          },
+        },
+      },
       tailwindcss = {
         filetypes = {
           'html',
@@ -242,7 +257,22 @@ return { -- LSP Configuration & Plugins
         },
       },
 
-      biome = {},
+      biome = {
+        filetypes = {
+          'astro',
+          'css',
+          'graphql',
+          'html',
+          'javascript',
+          'javascriptreact',
+          'json',
+          'jsonc',
+          'svelte',
+          'typescript',
+          'typescriptreact',
+          'vue',
+        },
+      },
 
       -- svelte / sveltekit
       svelte = {

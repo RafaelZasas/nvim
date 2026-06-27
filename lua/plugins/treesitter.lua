@@ -1,34 +1,44 @@
 return { -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
+  lazy = false,
   build = ':TSUpdate',
-  opts = {
-    ensure_installed = {
+  config = function()
+    -- Install parsers (async, no-op if already installed)
+    require('nvim-treesitter').install {
       'bash',
       'c',
-      'go',
+      'diff',
       'html',
+      'javascript',
+      'jsdoc',
+      'json',
+      'json5',
       'lua',
+      'luadoc',
+      'luap',
       'markdown',
+      'python',
+      'regex',
+      'tsx',
+      'typescript',
       'vim',
       'vimdoc',
-    },
-    -- Autoinstall languages that are not installed
-    auto_install = true,
-    highlight = { enable = true },
-    indent = { enable = true },
-  },
-  dependencies = {},
-  config = function(_, opts)
-    -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-
-    ---@diagnostic disable-next-line: missing-fields
-    require('nvim-treesitter.configs').setup(opts)
-
-    -- There are additional nvim-treesitter modules that you can use to interact
-    -- with nvim-treesitter. You should go explore a few and see what interests you:
-    --
-    --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-    --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-    --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+      'yaml',
+      'go',
+      'zig',
+    }
+    -- Enable treesitter highlighting, folding, and indentation for all filetypes
+    vim.api.nvim_create_autocmd('FileType', {
+      desc = 'Enable treesitter highlighting, folding, and indentation',
+      callback = function(ev)
+        -- Highlighting: pcall to silently skip filetypes without a parser
+        pcall(vim.treesitter.start, ev.buf)
+        -- Folding
+        -- vim.wo[0][0].foldmethod = 'expr'
+        -- vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+        -- Indentation (experimental)
+        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      end,
+    })
   end,
 }

@@ -281,9 +281,6 @@ return { -- LSP Configuration & Pluginslsp
         root_dir = lspconfig.util.root_pattern('svelte.config.js', '.git'),
       },
 
-      -- Python
-      pylsp = {},
-
       lua_ls = {
         -- cmd = { ... },
         -- filetypes = { ... },

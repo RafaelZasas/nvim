@@ -22,7 +22,6 @@ return {
       typescript = { 'biome-check', 'prettierd', 'prettier', stop_after_first = true },
       javascriptreact = { 'biome-check', 'prettierd', 'prettier', stop_after_first = true },
       typescriptreact = { 'biome-check', 'prettierd', 'prettier', stop_after_first = true },
-      svelte = { 'biome-check', 'prettierd', 'prettier', stop_after_first = true },
       json = { 'biome-check', 'prettier' },
       css = { 'biome-check', 'prettier' },
       html = { 'biome-check', 'prettier' },
